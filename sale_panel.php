@@ -383,7 +383,7 @@ if (!isset($_SESSION['id'])) {
                     cal_(count);
                     $('#weight' + srno).select();
                     return false;
-
+                    return false;
                 }
             });
         });
