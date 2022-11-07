@@ -53,4 +53,8 @@ th {
     border-width: 0 1px;
     text-align: center;
 }
+/* .table>tbody {
+    font-size: 12px;
+    vertical-align: inherit;
+} */
 

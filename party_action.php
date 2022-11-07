@@ -2,6 +2,10 @@
 include('conn.php');
 include('function.php');
 
+// if(!isset($_SESSION['id'])) {
+//     header("location:login.php");
+//   }
+
 if (isset($_POST['btn_action'])) {
     if ($_POST['btn_action'] == 'fetch') {
         $output = array();
@@ -20,12 +24,13 @@ if (isset($_POST['btn_action'])) {
         } else {
             $query .= 'ORDER BY pt.party_name DESC ';
         }
-
+        // SELECT pt.*, (jamaw-naamew) as weight, (jamav-naamev) as value FROM party_tbl pt LEFT JOIN partyopstock_tbl pst ON pst.party_id=pt.party_id WHERE pt.party_name LIKE "%" OR pt.mobile LIKE "%" OR pt.state LIKE "%" OR pt.city LIKE "%" GROUP BY pt.party_name DESC
         $query1 = '';
 
         if ($_POST["length"] != -1) {
             $query1 .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
         }
+        
         $statement = mysqli_query($db, $query);
         $filtered_rows = mysqli_num_rows($statement);
         $i = 1;
@@ -119,8 +124,6 @@ if (isset($_POST['btn_action'])) {
         echo json_encode($output);
     }
 
-   
-
     if ($_POST['btn_action'] == 'Edit') {
         $where = array(
             'party_id'  =>  convert_string('decrypt', $_POST['party_id'])
@@ -162,7 +165,6 @@ if (isset($_POST['btn_action'])) {
        
     }
 
-   
     if ($_POST['btn_action'] == 'delete') {
         $where = array(
             'party_id'  =>  convert_string('decrypt', $_POST['party_id'])
@@ -171,4 +173,5 @@ if (isset($_POST['btn_action'])) {
             echo 'Party Record Deleted Parmanent!';
         }
     }
+   
 }

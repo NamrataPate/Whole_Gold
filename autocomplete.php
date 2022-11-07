@@ -17,7 +17,7 @@ if (isset($_POST['request']))
                 "product_id"=>$row['product_id'],
                 "item_name"=>$row['item_name'],
                 "weight" => '0',
-                "melt"=> '0',
+                "melt"=> '100',
                 "price"=> '0',
                 "amount"=> '0',
                 "lab_rate"=> '0',

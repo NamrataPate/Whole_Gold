@@ -14,7 +14,7 @@ if (!isset($_SESSION['id'])) {
             <span id="alert"></span>
             <form name="frm" id="sale-form" method="post">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-4"> 
                         Party Details:
                         <div class="form-group my-1">
                             <input type="hidden" name="party_id" id="party_id" />
@@ -43,17 +43,11 @@ if (!isset($_SESSION['id'])) {
                             </select>
                         </div>
                     </div>
-                    <!-- <div class="row">
+                    
                         <div class="col-sm-4">
                             <div id="balance_summary"></div>
                         </div>
-                        <div class="col-sm-4">
-                            <div id="balance_summary1"></div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div id="balance_summary2"></div>
-                        </div>
-                    </div> -->
+                       
                 </div>
                 </br></br>
                 <div class="table-responsive">
@@ -238,29 +232,31 @@ if (!isset($_SESSION['id'])) {
         });
     
        
-        // function balance_summary(btn_action, party_id, from_date = '', to_date = '', ) {
+        function balance_summary(btn_action, party_id, from_date = '', to_date = '', ) {
 
-        //     $.ajax({
-        //         url: "partytransaction_action.php",
-        //         method: "POST",
-        //         data: {
-        //             btn_action: btn_action,
-        //             party_id: party_id,
-        //             from_date: from_date,
-        //             to_date: to_date
-        //         },
-        //         success: function(feedback) {
-        //             // console.log(feedback);
+            $.ajax({
+                url: "partytransaction_action.php",
+                method: "POST",
+                data: {
+                    btn_action: btn_action,
+                    party_id: party_id,
+                    from_date: from_date,
+                    to_date: to_date
+                },
+                success: function(feedback) {
+                    // console.log(feedback);
                  
-        //             $('#balance_summary').html('Balance Details:' + feedback);
-        //             $('#balance_summary1').html('Transaction Details:' + feedback);
-        //             // $('#balance_summary2').html('Balance Details:' + feedback);
-        //         }
-        //     })
-        // }
+                    $('#balance_summary').html('Balance Details:' + feedback);
+                    // $('#balance_summary1').html('Transaction Details:' + feedback);
+                    // $('#balance_summary2').html('Balance Details:' + feedback);
+                }
+            })
+        }
 
         $('#sale_date').datepicker({
-            dateFormat: 'dd-mm-yy'
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true
         });
 
         let count = 1
@@ -297,10 +293,10 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" name="wast[]" id="wast${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" required />
                                 </td>
                                 <td>
-                                    <input type="text" name="rate[]" id="rate${count}" class="form-control  form-control-sm bhaw" data-srno="${count}" autocomplete="off" />
+                                    <input type="text" name="rate[]" id="rate${count}" class="form-control  form-control-sm bhaw"  readonly  data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="total_fine[]" id="total_fine${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" />
+                                    <input type="text" name="total_fine[]" id="total_fine${count}" class="form-control form-control-sm" readonly data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
                                     <input type="text" name="price1[]" id="price${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" />
@@ -318,7 +314,7 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" name="total_mcharge[]" id="total_mcharge${count}" class="form-control  form-control-sm gst" data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="grand_tot[]" id="grand_tot${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" required />
+                                    <input type="text" name="grand_tot[]" id="grand_tot${count}" class="form-control form-control-sm"  readonly data-srno="${count}" autocomplete="off" required />
                                 </td>
             
                                 <td><button type="button" id="${count}" class="btn btn-success btn-sm add_row pull-right">+</button></td>
@@ -327,9 +323,11 @@ if (!isset($_SESSION['id'])) {
             $('#maintable').append(html);
         });
 
-        
+      
         const cal_ = (count) => {
-        
+            
+            
+            for (let i = 1; i <= count; i++) {
                 let melt= 0;
                 let wast = 0;
                 let rate = 0;
@@ -340,13 +338,38 @@ if (!isset($_SESSION['id'])) {
                 let other_charge = 0;
                 let total_mcharge = 0;
                 let grand_tot = 0;
-               weight = $('#weight').val();
+                weight = $('#weight' + i).val();
+                wast = $('#wast' + i).val();
+               if(weight != ''){
+                melt = $('#melt' + i).val();
 
+                if (wast != ''){
+                    rate = parseFloat(melt)+parseFloat(wast);
+                }
+                $('#rate' + i).val(rate.toFixed(2));  
 
-              $('#rate').val(( melt + wast).toFixed(2));        
+                if(wast != ''){
+                    total_fine = parseFloat((weight)*parseFloat(rate)/100).toFixed(3);
+                }
+                $('#total_fine' + i).val(total_fine);
+                
+                lab_rate = $('#lab_rate' + i).val();
+                other_charge = $('#other_charge' + i).val();
+
+                if(lab_rate != ''){
+                    total_mcharge = parseFloat((weight)* parseFloat(lab_rate)/1000).toFixed(3);
+                }
+                $('#total_mcharge' + i).val(total_mcharge);
+                
+                if(lab_rate != ''){
+                    grand_tot = parseFloat(other_charge)+ parseFloat(total_mcharge);
+                }
+                $('#grand_tot' + i).val(grand_tot);
+               }
+                    
+            }
   
         }
-
 
 
         $(document).on('keydown', '.code', function() {
@@ -383,7 +406,7 @@ if (!isset($_SESSION['id'])) {
                     cal_(count);
                     $('#weight' + srno).select();
                     return false;
-                    return false;
+                   
                 }
             });
         });

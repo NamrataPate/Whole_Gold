@@ -27,6 +27,9 @@ if (isset($_POST['btn_action'])) {
         if ($_POST["length"] != -1) {
             $query1 .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
         }
+        // SELECT pt.*, pct.category_name, ist.jamagw, ist.jamafw, ist.naamegw, ist.naamefw FROM product_tbl pt INNER JOIN product_category_tbl pct ON pt.category_id = pct.category_id INNER JOIN itemopstock_tbl ist ON ist.product_id = pt.product_id WHERE pt.item_name LIKE "%" OR pt.code LIKE "%" OR pct.category_name LIKE "%" GROUP BY pt.item_name ORDER BY pt.item_name DESC
+        // echo $query;
+        // exit();
 
         $statement = mysqli_query($db, $query);
         $filtered_rows = mysqli_num_rows($statement);

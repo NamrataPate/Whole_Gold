@@ -17,7 +17,7 @@ if (!isset($_SESSION['id'])) {
                 <table id="party_table" class="table table-sm table-bordered table-striped mt-3" width="100%">
                     <thead class="thead-dark">
                         <tr>
-                            <th>#</th>
+                            <th>S.no</th>
                             <th>Party Name</th>
                             <th>Mobile</th>
                             <th>State</th>
@@ -28,6 +28,19 @@ if (!isset($_SESSION['id'])) {
                             <th width="5%">Action</th>
                         </tr>
                     </thead>
+                    <tfoot class="thead-dark">
+                        <tr>
+                            <th>#</th>
+                            <th>Party Name</th>
+                            <th>Mobile</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Party Type</th>
+                            <th>Opening Weight</th>
+                            <th>Opening Value</th>
+                            <th width="5%">Action</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
@@ -35,14 +48,16 @@ if (!isset($_SESSION['id'])) {
 </div>
 
 <div class="modal fade" id="partyModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Add new party</h5>
-                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="party-form" method="post">
+    <div class="modal-dialog" role="form">
+        <form id="party-form" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add new party</h5>
+                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div id="alert_action"></div>
                     <div class="row">
                         <div class="col-md-12 mb-2">
@@ -74,7 +89,6 @@ if (!isset($_SESSION['id'])) {
 
                         <div class="col-md-6 mb-2">
                             <div class="form-group">
-
                                 <input type="text" class="form-control form-control-sm" id="address" name="address" autocomplete="off" placeholder="Enter Address">
                             </div>
                         </div>
@@ -151,203 +165,208 @@ if (!isset($_SESSION['id'])) {
                         <button type="submit" name="submit" id="submit" class="btn btn-primary">Save Data</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
+        </form>
     </div>
-    <script>
-        $(document).ready(function() {
-            var height = $('body').height() - $('.navbar').height() - $('.footer').height() - 150;
+</div>
+<script>
+    $(document).ready(function() {
+        var height = $('body').height() - $('.navbar').height();
 
-            let partytable = $('#party_table').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "scrollY": height + "px",
-                "scrollCollapse": true,
-                "paging": false,
-                "order": [],
-                "ajax": {
-                    url: "party_action.php",
-                    type: "POST",
-                    data: {
-                        btn_action: 'fetch'
+        let partytable = $('#party_table').DataTable({
+            "fnCreatedRow": function(nRow, aData, iDataIndex) {
+                $(nRow).attr('id', aData[0]);
+            },
+            "processing": true,
+            "serverSide": true,
+            //  "scrollY": height + "px",
+            "scrollCollapse": true,
+            "paging": false,
+            "order": [],
+            "ajax": {
+                url: "party_action.php",
+                type: "POST",
+                data: {
+                    btn_action: 'fetch'
+                }
+            },
+            dom: 'Bfrtip',
+            buttons: [{
+                    text: '<i class="far fa-user"></i> Add New Party',
+                    className: 'btn-sm btn-outline-secondary',
+                    attr: {
+                        title: 'Add New Party',
+                        id: 'add_button'
+                    },
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary')
                     }
                 },
-                dom: 'Bfrtip',
-                buttons: [{
-                        text: '<i class="far fa-user"></i> Add New Party',
-                        className: 'btn-sm btn-outline-secondary',
-                        attr: {
-                            title: 'Add New Party',
-                            id: 'add_button'
-                        },
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary')
-                        }
+                {
+                    extend: 'excelHtml5',
+                    // text:'<i class="far fa-file-excel text-success"></li> Excel',
+                    text: '<i class="far fa-file-excel text-success"></i> Excel',
+                    className: 'btn-sm btn-outline-secondary',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     },
-                    {
-                        extend: 'excelHtml5',
-                        // text:'<i class="far fa-file-excel text-success"></li> Excel',
-                        text: '<i class="far fa-file-excel text-success"></i> Excel',
-                        className: 'btn-sm btn-outline-secondary',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                        },
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary')
-                        }
-                    },
-                    {
-                        extend: 'pdfHtml5',
-                        text: '<i class="far fa-file-pdf text-danger"></i> PDF',
-                        className: 'btn-sm btn-outline-secondary',
-                        pageSize: 'A4',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                        },
-                        title: 'Party List',
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary')
-                        }
-                    },
-                    {
-                        extend: 'print',
-                        text: '<i class="fas fa-print"></i> Print',
-                        className: 'btn-sm btn-outline-secondary',
-                        pageSize: 'A4',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5, 6, 7]
-                        },
-                        title: 'Party List',
-                        init: function(api, node, config) {
-                            $(node).removeClass('btn-secondary')
-                        }
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary')
                     }
-                ],
-                "columnDefs": [{
-                        "targets": [0, 1, 2, 3, 4, 5, 6, 7, 8],
-                        "orderable": false,
+                },
+                {
+                    extend: 'pdfHtml5',
+                    text: '<i class="far fa-file-pdf text-danger"></i> PDF',
+                    className: 'btn-sm btn-outline-secondary',
+                    pageSize: 'A4',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     },
-                    {
-                        "targets": [0, 6, 7, 8],
-                        "class": 'text-center',
+                    title: 'Party List',
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary')
                     }
-                ]
-            });
-
-            $('#add_button').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#partyModal');
-
-            $('#add_button').click(function() {
-                $('#party_form')[0].reset();
-            });
-
-            $(document).on('submit', '#party-form', function(event) {
-                event.preventDefault();
-                var form_data = $(this).serialize();
-                $.ajax({
-                    url: "./party_action.php",
-                    method: "POST",
-                    data: form_data,
-                    beforeSend: function() {
-                        $('#submit').attr('disabled', 'disabled');
-                        $('#submit').html('Submitting...');
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="fas fa-print"></i> Print',
+                    className: 'btn-sm btn-outline-secondary',
+                    pageSize: 'A4',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6, 7]
                     },
-                    success: function(feedback) {
-                        if ($('#btn_action').val() == 'Add') {
-                            $('#party-form')[0].reset();
-                            $('#party_name').focus();
-                        }
-                        $('#submit').html('Save Data');
-                        //$('#alert_action').fadeIn().html(feedback);
-                        $('#alert_action').fadeIn().html('<div class="alert alert-success">' + feedback + '</div>');
-                        setTimeout(function() {
-                            $('#alert_action').fadeOut('fast');
-                        }, 5000);
-                        $('#submit').attr('disabled', false);
-                        partytable.ajax.reload();
+                    title: 'Party List',
+                    init: function(api, node, config) {
+                        $(node).removeClass('btn-secondary')
                     }
-                });
-            });
+                }
+            ],
+            "columnDefs": [{
+                    "targets": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+                    "orderable": false,
+                },
+                {
+                    "targets": [0, 6, 7, 8],
+                    "class": 'text-center',
+                }
+            ]
+        });
 
-            $(document).on('click', '.update', function() {
-                var party_id = $(this).attr("id");
+        $('#add_button').attr('data-bs-toggle', 'modal').attr('data-bs-target', '#partyModal');
+
+        $('#add_button').click(function() {
+            $('#party_form')[0].reset();
+        });
+
+        $(document).on('submit', '#party-form', function(event) {
+            event.preventDefault();
+            var form_data = $(this).serialize();
+            $.ajax({
+                url: "party_action.php",
+                method: "POST",
+                data: form_data,
+                beforeSend: function() {
+                 $('#submit').attr('disabled', 'disabled');
+                $('#submit').html('Submitting...');
+                },
+                success: function(feedback) {
+                    if ($('#btn_action').val() == 'Add') {
+                        $('#party-form')[0].reset();
+                        $('#party_name').focus();
+                    }
+                    $('#submit').html('Save Data');
+                    $('#alert_action').fadeIn().html(feedback);
+                    $('#alert_action').fadeIn().html('<div class="alert alert-success">' + feedback + '</div>');
+                    setTimeout(function() {
+                        $('#alert_action').fadeOut('fast');
+                    }, 5000);
+                    $('#submit').attr('disabled', false);
+                    partytable.ajax.reload();
+                }
+            });
+        });
+
+        $(document).on('click', '.update', function() {
+            var party_id = $(this).attr("id");
+            $.ajax({
+                url: "party_action.php",
+                method: "POST",
+                data: {
+                    party_id: party_id,
+                    btn_action: 'fetch_single'
+                },
+                dataType: "json",
+                success: function(data) {
+                    $('#partyModal').modal('show');
+                    $('#party-name').val(data.party_name);
+                    $('#mobile').val(data.mobile);
+                    $('#city').val(data.city);
+                    $('#state').val(data.state);
+                    $('#address').val(data.address);
+                    $('#party_type').val(data.party_type);
+                    $('#added_date').val(data.added_date);
+                    $('#jamaw').val(data.jamaw);
+                    $('#jamav').val(data.jamav);
+                    $('#naamew').val(data.naamew);
+                    $('#naamev').val(data.naamev);
+                    $('.modal-title').html("Edit Party Details");
+                    $('#party_id').val(party_id);
+                    $('#btn_action').val('Edit');
+                    // console.log(data);
+                    $('#submit').html('<i class="fa fa-check"></i> Edit Data');
+                    partytable.ajax.reload();
+                    // console.log(data);
+                }
+
+            });
+        });
+
+        $(document).on('click', '.change-status', function() {
+            var party_id = $(this).attr("id");
+            var party_status = $(this).data('status');
+            if (confirm('Are you sure you want to change party status ?')) {
                 $.ajax({
                     url: "party_action.php",
                     method: "POST",
                     data: {
                         party_id: party_id,
-                        btn_action: 'fetch_single'
+                        party_status: party_status,
+                        btn_action: 'status'
                     },
-                    dataType: "json",
                     success: function(data) {
-                        $('#partyModal').modal('show');
-                        $('#party-name').val(data.party_name);
-                        $('#mobile').val(data.mobile);
-                        $('#city').val(data.city);
-                        $('#state').val(data.state);
-                        $('#address').val(data.address);
-                        $('#party_type').val(data.party_type);
-                        $('#added_date').val(data.added_date);
-                        $('#jamaw').val(data.jamaw);
-                        $('#jamav').val(data.jamav);
-                        $('#naamew').val(data.naamew);
-                        $('#naamev').val(data.naamev);
-                        $('.modal-title').html("Edit Party Details");
-                        $('#party_id').val(party_id);
-                        $('#btn_action').val('Edit');
-                        // console.log(data);
-                        $('#submit').html('<i class="fa fa-check"></i> Edit Data');
+                        alert(data)
                         partytable.ajax.reload();
-                        // console.log(data);
                     }
-
                 });
-            });
-
-            $(document).on('click', '.change-status', function() {
-                var party_id = $(this).attr("id");
-                var party_status = $(this).data('status');
-                if (confirm('Are you sure you want to change party status ?')) {
-                    $.ajax({
-                        url: "party_action.php",
-                        method: "POST",
-                        data: {
-                            party_id: party_id,
-                            party_status: party_status,
-                            btn_action: 'status'
-                        },
-                        success: function(data) {
-                            alert(data)
-                            partytable.ajax.reload();
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            });
-
-            $(document).on('click', '.delete', function() {
-                var party_id = $(this).attr("id");
-                if (confirm('Are you sure you want to delete party Parmanent ?')) {
-                    $.ajax({
-                        url: "party_action.php",
-                        method: "POST",
-                        data: {
-                            party_id: party_id,
-                            btn_action: 'delete'
-                        },
-                        success: function(data) {
-                            alert(data)
-                            partytable.ajax.reload();
-                        }
-                    });
-                } else {
-                    return false;
-                }
-            });
-
-            $('#added_date').datepicker({
-                dateFormat: 'dd-mm-yy'
-            });
+            } else {
+                return false;
+            }
         });
-    </script>
+
+        $(document).on('click', '.delete', function() {
+            var party_id = $(this).attr("id");
+            if (confirm('Are you sure you want to delete party Parmanent ?')) {
+                $.ajax({
+                    url: "party_action.php",
+                    method: "POST",
+                    data: {
+                        party_id: party_id,
+                        btn_action: 'delete'
+                    },
+                    success: function(data) {
+                        alert(data)
+                        partytable.ajax.reload();
+                    }
+                });
+            } else {
+                return false;
+            }
+        });
+
+        $('#added_date').datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true
+        });
+    });
+</script>

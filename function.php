@@ -74,6 +74,29 @@ function delete_record($connect, $table, $where)
   }
 }
 
+function purchase_details($connect, $id)
+{
+  $output='';
+  $query = "SELECT * FROM purchasedetail_tbl pdt LEFT JOIN product_tbl pt ON pt.product_id=pdt.product_id WHERE pdt.pid=".$id;
+  $result = mysqli_query($connect, $query);
+  while ($row = mysqli_fetch_assoc($result)) 
+  {
+    $output .= $row['code'].'- W: '.$row['weight'].' V: '.$row['grand_total']."<br>";
+  }
+  return $output;
+}
+
+function sale_details($connect, $id)
+{
+  $output='';
+  $query = "SELECT * FROM saledetail_tbl sdt LEFT JOIN product_tbl pt ON pt.product_id=sdt.product_id WHERE sdt.sid=".$id;
+  $result = mysqli_query($connect, $query);
+  while ($row = mysqli_fetch_assoc($result)) 
+  {
+    $output .= $row['code'].'- W: '.$row['weight'].' V: '.$row['grand_total']."<br>";
+  }
+  return $output;
+}
 function get_total_all_records($connect, $tablename)
 {
   $statement = mysqli_query($connect, "SELECT * FROM " . $tablename . " ");

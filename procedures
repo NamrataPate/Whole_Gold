@@ -1,0 +1,47 @@
+BEGIN
+DECLARE party_id_in int;
+DECLARE party_type_in int;
+DECLARE date_in date;
+
+if(in_party_id<>'')THEN
+SET party_id_in = in_party_id;
+ELSE
+SET party_id_in = NULL;
+END IF;
+
+if(in_party_type<>'')THEN
+SET party_type_in = in_party_type;
+ELSE
+SET party_type_in = NULL;
+END IF;
+
+if(in_date<>'')THEN
+SET date_in = in_date;
+ELSE
+SET date_in = CURRENT_DATE;
+END IF;
+
+SELECT party_id,party_name,party_type,IFNULL((svalue-pvalue+(IFNULL(bpbamount-bsbamount-bpcamount+bscamount-bpjamount+bsjamount,0))),0) gvalue,
+    (IFNULL((sweight-pweight),0) + IFNULL((bsbWeight-bpbWeight),0)) gweight FROM 
+    (
+    SELECT * from (
+        SELECT p.party_id,p.party_name,p.party_type,p.party_status, IFNULL(post.jamaw+( select IFNULL(sum(total_rate),0) from purchase_tbl where party_id = p.party_id and methodtype ='weight' and purchase_date <= date_in ),0) pweight,IFNULL(
+        post.jamav+( select IFNULL(sum(final_purchase_amount),0) from purchase_tbl where party_id = p.party_id and purchase_date <= date_in ),0)
+                    pvalue 
+        ,IFNULL(post.naamew+( select IFNULL(sum(total_rate),0) from sale_tbl where party_id= p.party_id and methodtype ='weight' and sale_date <= date_in ),0) sweight 
+        , IFNULL(post.naamev +( select IFNULL(sum(final_sale_amount),0) from sale_tbl where party_id= p.party_id and sale_date <= date_in ),0)svalue 
+    FROM `party_tbl` p inner join partyopstock_tbl post on post.party_id = p.party_id ) tt
+    left JOIN 
+    (SELECT * from ( SELECT b.party_id as bparty_id, 
+    (SELECT IFNULL(sum(val),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'PURCHASE' and transactionunder='BHAAW' AND insdate <= date_in ) bpbamount, 
+    (SELECT IFNULL(sum(val),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'SALE' and transactionunder='BHAAW' AND insdate <= date_in ) bsbamount, 
+    ( SELECT IFNULL(sum(amount) ,0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'PURCHASE' and transactionunder='CASH' AND insdate <= date_in ) bpcamount, 
+    ( SELECT IFNULL(sum(amount),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'SALE' and transactionunder='CASH' AND insdate <= date_in ) bscamount, 
+    ( SELECT IFNULL(sum(amount),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'PURCHASE' and transactionunder ='JOURNAL' AND insdate <= date_in) bpjamount, 
+    ( SELECT IFNULL(sum(amount),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'SALE' and transactionunder = 'JOURNAL' AND insdate <= date_in ) bsjamount, 
+    ( SELECT IFNULL(sum(weight),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'PURCHASE' and transactionunder = 'BHAAW' AND insdate <= date_in ) bpbWeight, 
+    ( SELECT IFNULL(sum(weight),0) FROM bhaaw_tbl WHERE party_id = b.party_id and tratype = 'SALE' and transactionunder = 'BHAAW' AND insdate <= date_in ) bsbWeight 
+    FROM bhaaw_tbl b group by b.party_id ) ibt ) ibttbl on  ibttbl.bparty_id = tt.party_id 
+
+)finalTbl where finalTbl.party_type = IFNULL(party_type_in,finalTbl.party_type) and finalTbl.party_id = IFNULL(party_id_in,finalTbl.party_id) and finalTbl.party_status = 0 order by finalTbl.party_name ;
+END

@@ -19,7 +19,7 @@ if (!isset($_SESSION['id'])) {
                 <table id="user_table" class="table table-sm table-bordered table-striped m-0" width="100%">
                     <thead class="thead-dark">
                         <tr>
-                            <th>#</th>
+                            <th>S.no</th>
                             <th>User Name</th>
                             <th>Mobile</th>
                             <th>Email</th>
@@ -69,8 +69,7 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" class="form-control form-control-sm" id="user-mobile" name="user_mobile" autocomplete="off" placeholder="Enter User Mobile">
                                 </div>
                             </div>
-                        </div>
-
+                        </div> 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
