@@ -266,7 +266,7 @@ if (!isset($_SESSION['id'])) {
                 $('#submit').focus();
                 return false;
             }
-            $(this).replaceWith($('<span id="' + id + '"class="fa fa-remove text-danger remove_row" style="font-size:16px;color:red;"><span>'));
+            $(this).replaceWith($('<span id="' + id + '"class="fa fa-remove btn btn-danger btn-sm text-light remove_row" style="font-size:16px;color:red;"><span>'));
 
             count++; 
             let html = '';
@@ -415,7 +415,7 @@ if (!isset($_SESSION['id'])) {
             cal_(count)
         });
 
-        
+    
         $(document).on('click', '.remove_row', function() {
             var row_id = $(this).attr('id');
             $('#row_id_' + row_id).remove();

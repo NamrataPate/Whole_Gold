@@ -131,17 +131,22 @@ if (!isset($_SESSION['id'])) {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th style="font-size:13px; text-align:left;" colspan="1">Total</th>
+                                <th style="font-size:13px; text-align:left;" colspan="3">Total</th>
                                 <th><span id="net_weight"></span></th>
                                 <th></th>
+                                <th></th>
+                                <!-- <th colspan="2"><span id="fine_weight"></span></th> -->
                                 <th><span id="fine_weight"></span></th>
+                                <th><span id="total_fine"></span></th>
                                 <th></th>
                                 <th><span id="total_amount"></span></th>
-                                <th colspan="2"></th>
                                 <th></th>
+                                <!-- <th><span id="total_amount"></span></th> -->
+                                
+                                <!-- <th></th> -->
                                 <th></th>
-                                <th><span id="final_grand_total"> </span></th>
-                                <th colspan="3"></th>
+                                <th><span id="total_mcharge1"></span></th>
+                                <th><span id="final_grand_total"></span></th>
                                 <th></th>
                             </tr>
                             <tr>
@@ -151,13 +156,19 @@ if (!isset($_SESSION['id'])) {
                                 </td>
                             </tr>
                             <tr>
+                                <td style="font-size:13px; text-align:right;" colspan="13" class="text-right p-1"><strong>Final Amt </strong>:</td>
+                                <td colspan="2">
+                                    <input type="text" name="final_amount" id="final_amount" class="form-control form-control-sm final_amount" readonly>
+                                </td>
+                            </tr>
+                            <!-- <tr>
                                 <th style="font-size:13px; text-align:right;" colspan="14" class="text-right p-1">Total GST : </th>
                                 <th class="p-1"><span id="total_gst_amount"></span></th>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <th style="font-size:13px; text-align:right;" colspan="14" class="text-right p-1">Final Amt : </th>
                                 <th class="p-1"><span id="final_amount"></span></th>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td colspan="15" align="center" class="p-1">
                                     <input type="hidden" name="btn_action" id="btn_action" value="1"/>
@@ -271,7 +282,7 @@ if (!isset($_SESSION['id'])) {
                 $('#submit').focus();
                 return false;
             }
-            $(this).replaceWith($('<span id="' + id + '"class="fa fa-remove text-danger remove_row" style="font-size:16px;color:red;"><span>'));
+            $(this).replaceWith($('<span id="' + id + '"class="fa fa-remove btn btn-danger btn-sm text-light remove_row" style="font-size:16px;color:red;"><span>'));
 
             count++; 
             let html = '';
@@ -330,18 +341,29 @@ if (!isset($_SESSION['id'])) {
 
     
         const cal_ = (count) => {
-           
+
+            var final_grand_total = 0;
+		    var total_amount = 0;
+		    var net_weight = 0;
+            // let total_fine = 0;
+		    var fine_weight = 0;
+            var total_mcharge = 0;
+		    var discount = 0;
+		    discount = $('#discount').val();     
+
             for (let i = 1; i <= count; i++) {
                 let melt= 0;
                 let wast = 0;
                 let rate = 0;
                 let total_fine = 0;
                 let amount = 0;
+                let other_amount = 0;
                 let making_charge = 0;
                 let lab_rate = 0;
                 let other_charge = 0;
                 let total_mcharge = 0;
                 let grand_tot = 0;
+                
                weight = $('#weight' + i).val();
                wast = $('#wast' + i).val();
                if(weight != ''){
@@ -369,9 +391,32 @@ if (!isset($_SESSION['id'])) {
                     grand_tot = parseFloat(other_charge)+ parseFloat(total_mcharge);
                 }
                 $('#grand_tot' + i).val(grand_tot);
+
+                    net_weight = parseFloat(net_weight) + parseFloat(weight); 
+                    // console.log(net_weight);
+                        // $('#net_weight' + i).val(net_weight);
+
+			        fine_weight = parseFloat(fine_weight) + parseFloat(rate);
+                    // console.log(fine_weight);
+                    // total_fine = parseFloat(total_fine) + parseFloat(total_fine);
+			        total_amount = parseFloat(total_amount) + parseFloat(amount);
+                    total_mcharge = parseFloat(total_mcharge1) + parseFloat(total_mcharge);
+			     
+			        final_grand_total = parseFloat(final_grand_total) + parseFloat(amount) + parseFloat(making_charge)  + parseFloat(other_amount);
+
                }
-                    
+            
+
             }
+            $('#net_weight').text(net_weight.toFixed(2));
+            
+            $('#fine_weight').text(fine_weight.toFixed(2));
+            $('#total_fine').text(Math.round(total_fine).toFixed(2));
+            $('#total_amount').text(Math.round(total_amount).toFixed(2));
+		    // $('#total_gst_amount').text(total_gst_amount.toFixed(2));
+            $('#total_mcharge').text(total_mcharge.toFixed(2));
+            $('#final_grand_total').text(Math.round(final_grand_total).toFixed(2));
+            $('#final_amount').text(Math.round(final_grand_total+total_gst_amount-discount).toFixed(2));
   
         }
 

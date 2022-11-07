@@ -279,6 +279,7 @@ if (isset($_GET['pid'])) {
                 $('#discount').focus();
                 return false;
             }
+            
             $('#remove' + id).replaceWith($('<span id="' + id + '" class="fas fa-times fa-lg text-danger remove_row"></span>'));
            // $(this).replaceWith($('<span id="' + id + '" class="fas fas-times text-danger remove_row"></span>'));
             count++;
