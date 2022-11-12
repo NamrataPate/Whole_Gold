@@ -93,7 +93,7 @@ function sale_details($connect, $id)
   $result = mysqli_query($connect, $query);
   while ($row = mysqli_fetch_assoc($result)) 
   {
-    $output .= $row['code'].'- W: '.$row['weight'].' V: '.$row['grand_total']."<br>";
+    $output .= $row['code'].'- W: '.$row['weight'].' V: '.$row['grand_tot']."<br>";
   }
   return $output;
 }

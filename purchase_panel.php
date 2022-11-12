@@ -5,7 +5,7 @@ if (!isset($_SESSION['id'])) {
     header("location:login.php");
 }
 ?>
-<div class="container-fluid")>
+<div class="container-fluid" )>
     <div class="card mt-3">
         <div class="card-header">
             <strong>Purchase Panel</strong>
@@ -44,9 +44,9 @@ if (!isset($_SESSION['id'])) {
                         </div>
                     </div>
                     <!-- <div class="row"> -->
-                        <div class="col-sm-4">
-                            <div id="balance_summary"> 
-                            </div>
+                    <div class="col-sm-4">
+                        <div id="balance_summary">
+                        </div>
                         <!-- </div> -->
                         <!-- <div class="col-sm-4">
                             <div id="balance_summary1"></div>
@@ -91,17 +91,17 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" name="unit[]" id="unit1" class="form-control form-control-sm" data-srno="1" autocomplete="off" required />
                                 </td>
                                 <td>
-                                    <input type="text" name="weight[]" id="weight1" value= "" class="form-control form-control-sm"  data-srno="1" autocomplete="off" required />
+                                    <input type="text" name="weight[]" id="weight1" value="" class="form-control form-control-sm" data-srno="1" autocomplete="off" required />
                                 </td>
                                 <td>
                                     <input type="text" name="melt[]" id="melt1" class="form-control form-control-sm melt" data-srno="1" autocomplete="off" required />
                                 </td>
 
                                 <td>
-                                    <input type="text" name="wast[]" id="wast1"  class="form-control form-control-sm " data-srno="1" autocomplete="off" required />
+                                    <input type="text" name="wast[]" id="wast1" class="form-control form-control-sm " data-srno="1" autocomplete="off" required />
                                 </td>
                                 <td>
-                                    <input type="text" name="rate[]" id="rate1"    class="form-control form-control-sm" readonly data-srno="1" autocomplete="off"  required />
+                                    <input type="text" name="rate[]" id="rate1" class="form-control form-control-sm" readonly data-srno="1" autocomplete="off" required />
                                 </td>
                                 <td>
                                     <input type="text" name="total_fine[]" id="total_fine1" class="form-control form-control-sm " readonly data-srno="1" autocomplete="off" />
@@ -113,7 +113,7 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" name="amount[]" id="amount1" class="form-control form-control-sm" data-srno="1" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="lab_rate[]" id="lab_rate1" class="form-control form-control-sm"  data-srno="1"  autocomplete="off" />
+                                    <input type="text" name="lab_rate[]" id="lab_rate1" class="form-control form-control-sm" data-srno="1" autocomplete="off" />
                                 </td>
 
                                 <td>
@@ -123,9 +123,9 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" name="total_mcharge[]" id="total_mcharge1" class="form-control  form-control-sm " data-srno="1" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="grand_tot[]" id="grand_tot1" class="form-control form-control-sm"  readonly data-srno="1" autocomplete="off" required />
+                                    <input type="text" name="grand_tot[]" id="grand_tot1" class="form-control form-control-sm" readonly data-srno="1" autocomplete="off" required />
                                 </td>
-                                
+
                                 <td><button type="button" id="1" class="btn btn-success btn-sm add_row pull-right">+</button></td>
                             </tr>
                         </tbody>
@@ -135,32 +135,46 @@ if (!isset($_SESSION['id'])) {
                                 <th><span id="net_weight"></span></th>
                                 <th></th>
                                 <th></th>
-                                <!-- <th colspan="2"><span id="fine_weight"></span></th> -->
-                                <th><span id="fine_weight"></span></th>
-                                <th><span id="total_fine"></span></th>
+                                <th><span id="net_rate"></span></th>
+                                <th></th>
                                 <th></th>
                                 <th><span id="total_amount"></span></th>
                                 <th></th>
-                                <!-- <th><span id="total_amount"></span></th> -->
-                                
-                                <!-- <th></th> -->
                                 <th></th>
-                                <th><span id="total_mcharge1"></span></th>
+                                <th></th>
                                 <th><span id="final_grand_total"></span></th>
                                 <th></th>
                             </tr>
                             <tr>
+                                <td colspan="14" class="text-right p-1" style="text-align:end;">Discount : </td>
+                                <td>
+                                    <input type="text" name="discount" id="discount" class="form-control form-control-sm discount">
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <th colspan="14" class="text-right p-1">Total GST : </th>
+                                <th class="p-1"><span id="total_gst_amount"></span></th>
+                            </tr> -->
+                            <tr>
+                                <th colspan="14" class="text-right p-1" style="text-align:end;">Final Amt : </th>
+                                <th class="p-1"><span id="final_amount"></span></th>
+                            </tr>
+                            <!-- <tr>
                                 <td style="font-size:13px; text-align:right;" colspan="13" class="text-right p-1"><strong>Discount</strong>:</td>
                                 <td colspan="2">
                                     <input type="text" name="discount" id="discount" class="form-control form-control-sm discount">
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
+                                <th colspan="12" class="text-right p-1">Total GST : </th>
+                                <th class="p-1"><span id="total_gst_amount"></span></th>
+                            </tr> -->
+                            <!-- <tr>
                                 <td style="font-size:13px; text-align:right;" colspan="13" class="text-right p-1"><strong>Final Amt </strong>:</td>
                                 <td colspan="2">
                                     <input type="text" name="final_amount" id="final_amount" class="form-control form-control-sm final_amount" readonly>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <!-- <tr>
                                 <th style="font-size:13px; text-align:right;" colspan="14" class="text-right p-1">Total GST : </th>
                                 <th class="p-1"><span id="total_gst_amount"></span></th>
@@ -171,7 +185,7 @@ if (!isset($_SESSION['id'])) {
                             </tr> -->
                             <tr>
                                 <td colspan="15" align="center" class="p-1">
-                                    <input type="hidden" name="btn_action" id="btn_action" value="1"/>
+                                    <input type="hidden" name="btn_action" id="btn_action" value="1" />
                                     <button type="submit" name="submit" id="submit" class="btn btn-primary btn">Submit</button>
                                 </td>
                             </tr>
@@ -184,39 +198,6 @@ if (!isset($_SESSION['id'])) {
 </div>
 
 <script>
-    // function Calci(obj)
-    // {
-    //     var a = document.getElementById("melt"+obj).value;
-    //     var b = document.getElementById("wast"+obj).value;
-    //     // console.log(a);
-    //     // console.log(b);
-    //     var d = parseFloat(a) + parseFloat(b);
-    //     var c = document.getElementById("weight"+obj).value;
-    //     document.getElementById("rate"+obj).value = d;
-    //     document.getElementById("total_fine"+obj).value = (parseFloat(c)* d) / 100;
-    // }
-    //     function CalAmount(obj){
-    //         var a = document.getElementById("lab_rate"+obj).value;
-    //         var b = document.getElementById("other_charge"+obj).value;
-    //         var g = document.getElementById("weight"+obj).value;
-
-    //         var c = parseFloat(g) * parseFloat(a)/1000;
-    //         document.getElementById("total_mcharge"+obj).value = c;
-    //         var d = c;
-    //         var e = parseFloat(b) + parseFloat(d);
-    //         document.getElementById("grand_tot"+obj).value = e;
-
-    //     }
-
-        // function CalRate(){
-        //     var a = document.getElementById("melt1").value;
-        //     var b = document.getElementById("rate1").value;
-        //     var c = parseFloat(b)- parseFloat(a);
-        //     console.log(c);
-        //     document.getElementById("wast1") = c;
-
-        // }
-    
     $(document).ready(function() {
         $(document).on('keydown', '#party_name', function() {
             $('#party_name').autocomplete({
@@ -247,8 +228,7 @@ if (!isset($_SESSION['id'])) {
                 }
             });
         });
-    
-       
+
         function balance_summary(btn_action, party_id, from_date = '', to_date = '', ) {
 
             $.ajax({
@@ -262,7 +242,7 @@ if (!isset($_SESSION['id'])) {
                 },
                 success: function(feedback) {
                     // console.log(feedback);
-                 
+
                     $('#balance_summary').html('Balance Details: ' + feedback);
                     // $('#balance_summary1').html('Transaction Details:' + feedback);
                     // $('#balance_summary2').html('Balance Details:' + feedback);
@@ -279,12 +259,12 @@ if (!isset($_SESSION['id'])) {
         $(document).on('click', '.add_row', function() {
             let id = $(this).attr('id');
             if ($('#product_id' + id).val() == '') {
-                $('#submit').focus();
+                $('#code1').focus();
                 return false;
             }
             $(this).replaceWith($('<span id="' + id + '"class="fa fa-remove btn btn-danger btn-sm text-light remove_row" style="font-size:16px;color:red;"><span>'));
 
-            count++; 
+            count++;
             let html = '';
             html += `
                         <tr id="row_id_${count}">
@@ -339,20 +319,15 @@ if (!isset($_SESSION['id'])) {
             $('#maintable').append(html);
         });
 
-    
         const cal_ = (count) => {
-
             var final_grand_total = 0;
-		    var total_amount = 0;
-		    var net_weight = 0;
-            // let total_fine = 0;
-		    var fine_weight = 0;
-            var total_mcharge = 0;
-		    var discount = 0;
-		    discount = $('#discount').val();     
-
+            var total_amount = 0;
+            var net_weight = 0;
+            var net_rate = 0;
+            var discount = 0
+            discount = $('#discount').val();
             for (let i = 1; i <= count; i++) {
-                let melt= 0;
+                let melt = 0;
                 let wast = 0;
                 let rate = 0;
                 let total_fine = 0;
@@ -363,62 +338,62 @@ if (!isset($_SESSION['id'])) {
                 let other_charge = 0;
                 let total_mcharge = 0;
                 let grand_tot = 0;
-                
-               weight = $('#weight' + i).val();
-               wast = $('#wast' + i).val();
-               if(weight != ''){
-                melt = $('#melt' + i).val();
 
-                if (wast != ''){
-                    rate = parseFloat(melt)+parseFloat(wast);
+                weight = $('#weight' + i).val();
+
+                wast = $('#wast' + i).val();
+
+                if (weight != '') {
+                    melt = $('#melt' + i).val();
+                    if (wast != '') {
+                        rate = parseFloat(melt) + parseFloat(wast);
+                    }
+                    $('#rate' + i).val(rate.toFixed(2));
+                    // console.log(rate);
+
+                    if (wast != '') {
+                        total_fine = parseFloat((weight) * parseFloat(rate) / 100).toFixed(3);
+                    }
+                    $('#total_fine' + i).val(Number(total_fine));
+                    // console.log(total_fine);
+
+                    lab_rate = $('#lab_rate' + i).val();
+
+                    other_charge = $('#other_charge' + i).val();
+
+                    if (lab_rate != '') {
+                        total_mcharge = parseFloat((weight) * parseFloat(lab_rate) / 1000).toFixed(3);
+                    }
+                    $('#total_mcharge' + i).val(total_mcharge);
+
+
+                    if (lab_rate != '') {
+                        grand_tot = parseFloat(other_charge) + parseFloat(total_mcharge);
+                    }
+                    $('#grand_tot' + i).val(grand_tot);
+
+
+                    net_weight = parseFloat(net_weight) + parseFloat(weight);
+                    net_rate = parseFloat(net_rate) + parseFloat(rate);
+                    total_amount = parseFloat(total_amount) + parseFloat(amount);
+                    final_grand_total = parseFloat(final_grand_total) + parseFloat(grand_tot);
+                    // $('#net_rate' + i).val(net_rate);
                 }
-                $('#rate' + i).val(rate.toFixed(2));  
-
-                if(wast != ''){
-                    total_fine = parseFloat((weight)*parseFloat(rate)/100).toFixed(3);
-                }
-                $('#total_fine' + i).val(total_fine);
-                
-                lab_rate = $('#lab_rate' + i).val();
-                other_charge = $('#other_charge' + i).val();
-
-                if(lab_rate != ''){
-                    total_mcharge = parseFloat((weight)* parseFloat(lab_rate)/1000).toFixed(3);
-                }
-                $('#total_mcharge' + i).val(total_mcharge);
-                
-                if(lab_rate != ''){
-                    grand_tot = parseFloat(other_charge)+ parseFloat(total_mcharge);
-                }
-                $('#grand_tot' + i).val(grand_tot);
-
-                    net_weight = parseFloat(net_weight) + parseFloat(weight); 
-                    // console.log(net_weight);
-                        // $('#net_weight' + i).val(net_weight);
-
-			        fine_weight = parseFloat(fine_weight) + parseFloat(rate);
-                    // console.log(fine_weight);
-                    // total_fine = parseFloat(total_fine) + parseFloat(total_fine);
-			        total_amount = parseFloat(total_amount) + parseFloat(amount);
-                    total_mcharge = parseFloat(total_mcharge1) + parseFloat(total_mcharge);
-			     
-			        final_grand_total = parseFloat(final_grand_total) + parseFloat(amount) + parseFloat(making_charge)  + parseFloat(other_amount);
-
-               }
-            
 
             }
+
             $('#net_weight').text(net_weight.toFixed(2));
-            
-            $('#fine_weight').text(fine_weight.toFixed(2));
-            $('#total_fine').text(Math.round(total_fine).toFixed(2));
+            $('#net_rate').text(net_rate.toFixed(2));
             $('#total_amount').text(Math.round(total_amount).toFixed(2));
-		    // $('#total_gst_amount').text(total_gst_amount.toFixed(2));
-            $('#total_mcharge').text(total_mcharge.toFixed(2));
+            $('#total_').text(Math.round(total_amount).toFixed(2));
             $('#final_grand_total').text(Math.round(final_grand_total).toFixed(2));
-            $('#final_amount').text(Math.round(final_grand_total+total_gst_amount-discount).toFixed(2));
-  
+            $('#final_amount').text(Math.round(final_grand_total - discount).toFixed(2));
+
         }
+        $(document).on('keyup', ' .lab_rate, .other_charge, .total_mcharge, .discount, .melt', function() {
+            cal_(count)
+        });
+
 
         $(document).on('keydown', '.code', function() {
             var srno = $(this).data('srno');
@@ -451,46 +426,40 @@ if (!isset($_SESSION['id'])) {
                     $('#lab_rate' + srno).val(ui.item.lab_rate);
                     $('#other_charge' + srno).val(ui.item.other_charge);
                     $('#total_mcharge' + srno).val(ui.item.total_mcharge);
-
                     return false;
                 }
             });
         });
 
-        $(document).on('keyup', ' .lab_rate, .other_charge, .total_mcharge, .discount, .melt', function() {
-            cal_(count)
-        });
 
-        
         $(document).on('click', '.remove_row', function() {
             var row_id = $(this).attr('id');
             $('#row_id_' + row_id).remove();
             count--;
         });
 
-        function Submit_form(){
+        function Submit_form() {
             $('#submit').attr('disabled', 'disabled');
 
             var form_data = $('#purchase-form').serialize();
             $.ajax({
-                url:"purchase_action.php",
-                method:"POST",
-                data:form_data,
-                success:function(feedback)
-                {
+                url: "purchase_action.php",
+                method: "POST",
+                data: form_data,
+                success: function(feedback) {
                     $('#purchase-form')[0].reset();
-                    $('#alert').html('<div class= "alert alert-success"><i class="fa fa-check"></i> '+feedback+'</div>');
-                    setTimeout(function(){
+                    $('#alert').html('<div class= "alert alert-success"><i class="fa fa-check"></i> ' + feedback + '</div>');
+                    setTimeout(function() {
                         location.reload();
                     }, 2000);
                 }
             });
         }
-        
-        $(document).on('submit', '#purchase-form', function(event){
-		  event.preventDefault();
-		  Submit_form();
-		});
+
+        $(document).on('submit', '#purchase-form', function(event) {
+            event.preventDefault();
+            Submit_form();
+        });
 
     });
 </script>

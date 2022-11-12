@@ -39,16 +39,24 @@ if (isset($_POST["submit"])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 
     <style media="screen">
+        body {
+            background-image: url(1445466.webp);
+            /* width: 100; */
+            /* height: 100; */
+            filter:blur(10.7);
+            cursor: pointer;
+            background-repeat: no-repeat;
+            background-size: cover;
+            object-fit: cover;
+
+        }
+
         *,
         *:before,
         *:after {
             padding: 0;
             margin: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            background-color: #080710;
         }
 
         .background {
@@ -61,8 +69,8 @@ if (isset($_POST["submit"])) {
         }
 
         form {
-            height: 500px;
-            width: 400px;
+            height: 430px;
+            width: 350px;
             background-color: rgba(255, 255, 255, 0.13);
             position: absolute;
             transform: translate(-50%, -50%);
@@ -93,7 +101,7 @@ if (isset($_POST["submit"])) {
         label {
             display: block;
             margin-top: 30px;
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 500;
         }
 
@@ -104,9 +112,34 @@ if (isset($_POST["submit"])) {
             background-color: rgba(255, 255, 255, 0.07);
             border-radius: 3px;
             padding: 0 10px;
-            margin-top: 8px;
+            margin-top: 5px;
             font-size: 14px;
             font-weight: 300;
+        }
+
+        input[type=text]:focus {
+            border: 3px solid #555;
+        }
+
+        input[type=password]:focus {
+            border: 3px solid #555;
+        }
+
+        /* input[type=submit].btn:hover{
+         border: 1px solid black;
+         } */
+
+        input#sign_in {
+            background-color: #4c9ed9;
+            color: #ffffff;
+            padding: 20px 40px;
+            border: 1px solid #111;
+        }
+
+        input#sign_in:hover {
+            background-color: #ffffff;
+            color: #4c9ed9;
+            border: 1px solid #111;
         }
 
         ::placeholder {
@@ -114,23 +147,38 @@ if (isset($_POST["submit"])) {
         }
 
         button {
-            margin-top: 50px;
-            width: 100%;
+            /* background-color: #4c9ed9; */
             background-color: #ffffff;
+            /* color: #ffffff;
+                padding: 20px 40px; */
+            border: 1px solid #111;
+            margin-top: 30px;
+            width: 100px;
+            /* background-color: #ffffff; */
             color: #080710;
-            padding: 15px 0;
+            padding: 12px 0;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 500;
             border-radius: 5px;
             cursor: pointer;
+
+        }
+
+        button:hover {
+            background-color: blue;
+            color: #ffffff;
+            border: 1px solid #111;
         }
     </style>
 </head>
 
 <body>
-    
+
     <form action="" method="post">
-        <h3>Login Here</h3>
+        <img src="user.png" width="50px" height="50px" style="border-radius: 50%; margin:auto;  display: block;
+        margin-left: auto;
+        margin-right: auto;">
+        <h4 align="center">Login Here</h4>
 
         <label for="username">Username</label>
         <input type="text" name="username" placeholder="Email or Phone" id="username">
