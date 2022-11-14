@@ -5,14 +5,14 @@ if (!isset($_SESSION['id'])) {
     header("location:login.php");
 }
 ?>
-<div class="container-fluid" )>
+<div class="container-fluid" onkeydown="return (event.keyCode != 116)">
     <div class="card mt-3">
         <div class="card-header">
-            <strong>Purchase Panel</strong>
+            <strong>parchase Panel</strong>
         </div>
         <div class="card-body mt-3">
             <span id="alert"></span>
-            <form name="frm" id="purchase-form" method="post">
+            <form name="frm" id="parchase-form" method="post">
                 <div class="row">
                     <div class="col-sm-4">
                         Party Details:
@@ -29,32 +29,41 @@ if (!isset($_SESSION['id'])) {
                     </div>
 
                     <div class="col-sm-2">
+                        <div class="form-check bg-light m-1">
+                            <input class="form-check-input" type="radio" id="" name="" onClick="document.location.href='index.php?purchase_panel'">
+                            <label class="form-check-label" for="Weight">
+                                <strong style="font-size:14px;">Weight</strong>
+                            </label>
+                        </div>
+                        <div class="form-check bg-light m-1">
+                            <input class="form-check-input" type="radio" name="" id="" onClick="document.location.href='index.php?purchasevalue_panel'">
+                            <label class="form-check-label" for="Value">
+                                <strong style="font-size:14px;">Value</strong>
+                            </label>
+                        </div>
+
                         Invoive Details:
                         <div class="form-group my-1">
-                            <input type="text" class="form-control form-control-sm" name="purchase_date" id="purchase_date" />
+                            <input type="text" class="form-control form-control-sm" name="parchase_date" id="parchase_date" />
                         </div>
                         <div class="form-group mb-1">
-                            <input type="text" name="purchase_no" id="purchase_no" value="" class="form-control form-control-sm" placeholder="Invoice No." />
+                            <input type="text" name="parchase_no" id="parchase_no" value="" class="form-control form-control-sm" placeholder="Invoice No." />
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <select name="methodtype" id="methodtype" class="form-control form-control-sm">
-                                <option value="value">Value</option>
-                                <option value="weight">Weight</option>
+                                <option value="value"  onClick="document.location.href='index.php?cashtransaction'">Weight</option>
+                                <option value="value" onClick="document.location.href='index.php?journaltransaction'">Value</option>
                             </select>
-                        </div>
+                            
+                            
+                        </div> -->
+
                     </div>
-                    <!-- <div class="row"> -->
+
                     <div class="col-sm-4">
-                        <div id="balance_summary">
-                        </div>
-                        <!-- </div> -->
-                        <!-- <div class="col-sm-4">
-                            <div id="balance_summary1"></div>
-                        </div> -->
-                        <!-- <div class="col-sm-4">
-                            <div id="balance_summary2"></div>
-                        </div> -->
+                        <div id="balance_summary"></div>
                     </div>
+
                 </div>
                 </br></br>
                 <div class="table-responsive">
@@ -98,29 +107,29 @@ if (!isset($_SESSION['id'])) {
                                 </td>
 
                                 <td>
-                                    <input type="text" name="wast[]" id="wast1" class="form-control form-control-sm " data-srno="1" autocomplete="off" required />
+                                    <input type="text" name="wast[]" id="wast1" class="form-control form-control-sm wast" data-srno="1" autocomplete="off" required />
                                 </td>
                                 <td>
-                                    <input type="text" name="rate[]" id="rate1" class="form-control form-control-sm" readonly data-srno="1" autocomplete="off" required />
+                                    <input type="text" name="rate[]" id="rate1" class="form-control form-control-sm rate" readonly data-srno="1" autocomplete="off" required />
                                 </td>
                                 <td>
-                                    <input type="text" name="total_fine[]" id="total_fine1" class="form-control form-control-sm " readonly data-srno="1" autocomplete="off" />
+                                    <input type="text" name="total_fine[]" id="total_fine1" class="form-control form-control-sm total_fine " readonly data-srno="1" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="price1[]" id="price1" class="form-control  form-control-sm input-sm " data-srno="1" autocomplete="off" />
+                                    <input type="text" name="price1[]" id="price11" class="form-control  form-control-sm input-sm price1" data-srno="1" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="amount[]" id="amount1" class="form-control form-control-sm" data-srno="1" autocomplete="off" />
+                                    <input type="text" name="amount[]" id="amount1" class="form-control form-control-sm" data-srno="1" readonly autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="lab_rate[]" id="lab_rate1" class="form-control form-control-sm" data-srno="1" autocomplete="off" />
+                                    <input type="text" name="lab_rate[]" id="lab_rate1" class="form-control form-control-sm lab_rate" data-srno="1" autocomplete="off" />
                                 </td>
 
                                 <td>
                                     <input type="text" name="other_charge[]" id="other_charge1" class="form-control form-control-sm  other_charge" data-srno="1" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="total_mcharge[]" id="total_mcharge1" class="form-control  form-control-sm " data-srno="1" autocomplete="off" />
+                                    <input type="text" name="total_mcharge[]" id="total_mcharge1" class="form-control  form-control-sm total_mcharge" data-srno="1" autocomplete="off" />
                                 </td>
                                 <td>
                                     <input type="text" name="grand_tot[]" id="grand_tot1" class="form-control form-control-sm" readonly data-srno="1" autocomplete="off" required />
@@ -159,30 +168,6 @@ if (!isset($_SESSION['id'])) {
                                 <th colspan="14" class="text-right p-1" style="text-align:end;">Final Amt : </th>
                                 <th class="p-1"><span id="final_amount"></span></th>
                             </tr>
-                            <!-- <tr>
-                                <td style="font-size:13px; text-align:right;" colspan="13" class="text-right p-1"><strong>Discount</strong>:</td>
-                                <td colspan="2">
-                                    <input type="text" name="discount" id="discount" class="form-control form-control-sm discount">
-                                </td>
-                            </tr> -->
-                            <!-- <tr>
-                                <th colspan="12" class="text-right p-1">Total GST : </th>
-                                <th class="p-1"><span id="total_gst_amount"></span></th>
-                            </tr> -->
-                            <!-- <tr>
-                                <td style="font-size:13px; text-align:right;" colspan="13" class="text-right p-1"><strong>Final Amt </strong>:</td>
-                                <td colspan="2">
-                                    <input type="text" name="final_amount" id="final_amount" class="form-control form-control-sm final_amount" readonly>
-                                </td>
-                            </tr> -->
-                            <!-- <tr>
-                                <th style="font-size:13px; text-align:right;" colspan="14" class="text-right p-1">Total GST : </th>
-                                <th class="p-1"><span id="total_gst_amount"></span></th>
-                            </tr> -->
-                            <!-- <tr>
-                                <th style="font-size:13px; text-align:right;" colspan="14" class="text-right p-1">Final Amt : </th>
-                                <th class="p-1"><span id="final_amount"></span></th>
-                            </tr> -->
                             <tr>
                                 <td colspan="15" align="center" class="p-1">
                                     <input type="hidden" name="btn_action" id="btn_action" value="1" />
@@ -229,6 +214,7 @@ if (!isset($_SESSION['id'])) {
             });
         });
 
+
         function balance_summary(btn_action, party_id, from_date = '', to_date = '', ) {
 
             $.ajax({
@@ -243,13 +229,14 @@ if (!isset($_SESSION['id'])) {
                 success: function(feedback) {
                     // console.log(feedback);
 
-                    $('#balance_summary').html('Balance Details: ' + feedback);
+                    $('#balance_summary').html('Balance Details:' + feedback);
                     // $('#balance_summary1').html('Transaction Details:' + feedback);
                     // $('#balance_summary2').html('Balance Details:' + feedback);
                 }
             })
         }
-        $('#purchase_date').datepicker({
+
+        $('#parchase_date').datepicker({
             dateFormat: 'dd-mm-yy',
             changeMonth: true,
             changeYear: true
@@ -262,14 +249,15 @@ if (!isset($_SESSION['id'])) {
                 $('#code1').focus();
                 return false;
             }
-            $(this).replaceWith($('<span id="' + id + '"class="fa fa-remove btn btn-danger btn-sm text-light remove_row" style="font-size:16px;color:red;"><span>'));
+
+            $(this).replaceWith($('<button type="button" id="' + id + '" class="btn btn-danger btn-sm remove_row pull-right">-</button>'));
 
             count++;
             let html = '';
             html += `
                         <tr id="row_id_${count}">
                                 <td>
-                                <input type="hidden" name="product_id[]" id="product_id${count}" data-srno="${count}" onChange="count()">
+                                <input type="hidden" name="product_id[]" id="product_id${count}" data-srno="${count}">
                             
                                 <input type="text" name="code[]" id="code${count}" class="form-control form-control-sm code" data-srno="${count}" autocomplete="off" required />
                             </td>
@@ -286,28 +274,28 @@ if (!isset($_SESSION['id'])) {
                                     <input type="text" name="melt[]" id="melt${count}" class="form-control form-control-sm melt" data-srno="${count}" autocomplete="off" required />
                                 </td>
                                 <td>
-                                    <input type="text" name="wast[]" id="wast${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" required />
+                                    <input type="text" name="wast[]" id="wast${count}" class="form-control form-control-sm wast" data-srno="${count}" autocomplete="off"  required />
                                 </td>
                                 <td>
-                                    <input type="text" name="rate[]" id="rate${count}" class="form-control  form-control-sm bhaw" data-srno="${count}"  readonly autocomplete="off" />
+                                    <input type="text" name="rate[]" id="rate${count}" class="form-control  form-control-sm rate"   data-srno="${count}"  readonly  autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="total_fine[]" id="total_fine${count}" class="form-control form-control-sm" data-srno="${count}"  readonly  autocomplete="off" />
+                                    <input type="text" name="total_fine[]" id="total_fine${count}" class="form-control form-control-sm"  data-srno="${count}" readonly autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="price1[]" id="price${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" />
+                                    <input type="text" name="price1[]" id="price1${count}" class="form-control form-control-sm price1" data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="amount[]" id="amount${count}" class="form-control  form-control-sm input-sm lab_charge" data-srno="${count}" autocomplete="off" />
+                                    <input type="text" name="amount[]" id="amount${count}" class="form-control  form-control-sm input-sm amount" data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="lab_rate[]" id="lab_rate${count}" class="form-control form-control-sm" data-srno="${count}" autocomplete="off" />
+                                    <input type="text" name="lab_rate[]" id="lab_rate${count}" class="form-control form-control-sm lab_rate" data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
                                     <input type="text" name="other_charge[]" id="other_charge${count}" class="form-control form-control-sm  other_charge" data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
-                                    <input type="text" name="total_mcharge[]" id="total_mcharge${count}" class="form-control  form-control-sm gst" data-srno="${count}" autocomplete="off" />
+                                    <input type="text" name="total_mcharge[]" id="total_mcharge${count}" class="form-control  form-control-sm total_mcharge" data-srno="${count}" autocomplete="off" />
                                 </td>
                                 <td>
                                     <input type="text" name="grand_tot[]" id="grand_tot${count}" class="form-control form-control-sm"  readonly data-srno="${count}" autocomplete="off" required />
@@ -319,12 +307,14 @@ if (!isset($_SESSION['id'])) {
             $('#maintable').append(html);
         });
 
+
         const cal_ = (count) => {
+
             var final_grand_total = 0;
             var total_amount = 0;
             var net_weight = 0;
             var net_rate = 0;
-            var discount = 0
+            var discount = 0;
             discount = $('#discount').val();
             for (let i = 1; i <= count; i++) {
                 let melt = 0;
@@ -332,33 +322,28 @@ if (!isset($_SESSION['id'])) {
                 let rate = 0;
                 let total_fine = 0;
                 let amount = 0;
-                let other_amount = 0;
                 let making_charge = 0;
                 let lab_rate = 0;
                 let other_charge = 0;
                 let total_mcharge = 0;
                 let grand_tot = 0;
-
+                let price1 = 0;
                 weight = $('#weight' + i).val();
-
                 wast = $('#wast' + i).val();
-
                 if (weight != '') {
                     melt = $('#melt' + i).val();
+
                     if (wast != '') {
                         rate = parseFloat(melt) + parseFloat(wast);
                     }
                     $('#rate' + i).val(rate.toFixed(2));
-                    // console.log(rate);
 
                     if (wast != '') {
                         total_fine = parseFloat((weight) * parseFloat(rate) / 100).toFixed(3);
                     }
-                    $('#total_fine' + i).val(Number(total_fine));
-                    // console.log(total_fine);
+                    $('#total_fine' + i).val(total_fine);
 
                     lab_rate = $('#lab_rate' + i).val();
-
                     other_charge = $('#other_charge' + i).val();
 
                     if (lab_rate != '') {
@@ -366,22 +351,18 @@ if (!isset($_SESSION['id'])) {
                     }
                     $('#total_mcharge' + i).val(total_mcharge);
 
-
                     if (lab_rate != '') {
                         grand_tot = parseFloat(other_charge) + parseFloat(total_mcharge);
                     }
                     $('#grand_tot' + i).val(grand_tot);
-
-
                     net_weight = parseFloat(net_weight) + parseFloat(weight);
                     net_rate = parseFloat(net_rate) + parseFloat(rate);
-                    total_amount = parseFloat(total_amount) + parseFloat(amount);
+                     total_amount = parseFloat(total_amount) + parseFloat(amount);
                     final_grand_total = parseFloat(final_grand_total) + parseFloat(grand_tot);
-                    // $('#net_rate' + i).val(net_rate);
+
                 }
-
+                
             }
-
             $('#net_weight').text(net_weight.toFixed(2));
             $('#net_rate').text(net_rate.toFixed(2));
             $('#total_amount').text(Math.round(total_amount).toFixed(2));
@@ -390,9 +371,6 @@ if (!isset($_SESSION['id'])) {
             $('#final_amount').text(Math.round(final_grand_total - discount).toFixed(2));
 
         }
-        $(document).on('keyup', ' .lab_rate, .other_charge, .total_mcharge, .discount, .melt', function() {
-            cal_(count)
-        });
 
 
         $(document).on('keydown', '.code', function() {
@@ -421,16 +399,22 @@ if (!isset($_SESSION['id'])) {
                     $('#unit' + srno).val(ui.item.unit);
                     $('#weight' + srno).val(ui.item.weight);
                     $('#melt' + srno).val(ui.item.melt);
-                    $('#price' + srno).val(ui.item.price);
+                    $('#price1' + srno).val(ui.item.price1);
                     $('#amount' + srno).val(ui.item.amount);
                     $('#lab_rate' + srno).val(ui.item.lab_rate);
                     $('#other_charge' + srno).val(ui.item.other_charge);
                     $('#total_mcharge' + srno).val(ui.item.total_mcharge);
+                    cal_(count);
+                    $('#weight' + srno).select();
                     return false;
+
                 }
             });
         });
 
+        $(document).on('keyup', '.wast, .rate, .price1, .lab_rate, .other_charge, .total_mcharge, .discount', function() {
+            cal_(count)
+        });
 
         $(document).on('click', '.remove_row', function() {
             var row_id = $(this).attr('id');
@@ -441,13 +425,13 @@ if (!isset($_SESSION['id'])) {
         function Submit_form() {
             $('#submit').attr('disabled', 'disabled');
 
-            var form_data = $('#purchase-form').serialize();
+            var form_data = $('#parchase-form').serialize();
             $.ajax({
-                url: "purchase_action.php",
+                url: "parchase_action.php",
                 method: "POST",
                 data: form_data,
                 success: function(feedback) {
-                    $('#purchase-form')[0].reset();
+                    $('#parchase-form')[0].reset();
                     $('#alert').html('<div class= "alert alert-success"><i class="fa fa-check"></i> ' + feedback + '</div>');
                     setTimeout(function() {
                         location.reload();
@@ -456,7 +440,7 @@ if (!isset($_SESSION['id'])) {
             });
         }
 
-        $(document).on('submit', '#purchase-form', function(event) {
+        $(document).on('submit', '#parchase-form', function(event) {
             event.preventDefault();
             Submit_form();
         });

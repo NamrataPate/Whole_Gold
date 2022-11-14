@@ -54,7 +54,7 @@ if (!isset($_SESSION['id'])) {
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel">Add new party</h5>
                     <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <!-- <span aria-hidden="true">&times;</span> -->
                     </button>
                 </div>
                 <div class="modal-body">

@@ -204,6 +204,9 @@ if (isset($_GET['bhaawlist'])){
 if(isset($_GET['edit_bhaawtransaction'])){
     include 'edit_bhaawtransaction.php';
 }
+if(isset($_GET['purchasevalue_panel'])){
+    include 'purchasevalue_panel.php';
+}
 ?>
 
 <script>
